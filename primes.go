@@ -55,7 +55,7 @@ func Factorize(n int, primes []int) []int {
 // Totient function counts the positive integers up to a given integer n that are relatively prime to n
 func Totient(n int) []int {
 	var t []int
-	//primes := GetPrimes(n)
+	primes := GetPrimes(n)
 
 	t = make([]int, n+1)
 	for i := 1; i <= n; i++ {
@@ -63,8 +63,14 @@ func Totient(n int) []int {
 	}
 
 	for i := 2; i <= n; i++ {
-		//factors := Factorize(i, primes)
-		// TODO
+		factors := Factorize(i, primes)
+		for j, factor := range factors {
+			if j == 0 || factors[j-1] != factors[j] {
+				t[i] *= factor - 1
+			} else {
+				t[i] *= factor
+			}
+		}
 	}
 
 	return t
