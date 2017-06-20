@@ -62,16 +62,30 @@ func Totient(n int) []int {
 		t[i] = 1
 	}
 
-	for i := 2; i <= n; i++ {
-		factors := Factorize(i, primes)
-		for j, factor := range factors {
-			if j == 0 || factors[j-1] != factors[j] {
-				t[i] *= factor - 1
-			} else {
-				t[i] *= factor
+	for _, prime := range primes {
+		for pow := prime; pow <= n; pow *= prime {
+			for j := pow; j <= n; j += pow {
+				if pow == prime {
+					t[j] *= prime - 1
+				} else {
+					t[j] *= prime
+				}
 			}
 		}
 	}
+
+	/*
+		for i := 2; i <= n; i++ {
+			factors := Factorize(i, primes)
+			for j, factor := range factors {
+				if j == 0 || factors[j-1] != factors[j] {
+					t[i] *= factor - 1
+				} else {
+					t[i] *= factor
+				}
+			}
+		}
+	*/
 
 	return t
 }
