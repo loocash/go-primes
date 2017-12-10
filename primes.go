@@ -1,8 +1,6 @@
 // Package primes generates prime numbers
 package primes
 
-import "math"
-
 // GetPrimes returns a slice of all primes less than or equal to n in ascending order
 func GetPrimes(n int) []int {
 	var p []int
@@ -26,9 +24,7 @@ func Sieve(n int) []bool {
 		p[i] = true
 	}
 
-	upperBound := int(math.Ceil(math.Sqrt(float64(n))))
-
-	for i := 2; i < upperBound; i++ {
+	for i := 2; i*i < n; i++ {
 		for j := i * i; j <= n; j += i {
 			p[j] = false
 		}

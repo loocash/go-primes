@@ -69,9 +69,10 @@ func ExampleSieve() {
 
 func BenchmarkSieve(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Sieve(1000)
+		Sieve(100000)
 	}
 }
+
 
 func TestFactorize(t *testing.T) {
 	var tests = []struct {
