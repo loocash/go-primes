@@ -3,40 +3,23 @@ package primes
 import "testing"
 import "fmt"
 
-func equalsInt(a, b []int) bool {
-	lena, lenb := len(a), len(b)
-	if lena != lenb {
-		return false
-	}
-	for i := range a {
-		if a[i] != b[i] {
-			return false
-		}
-	}
-	return true
+func equalsSlice(a, b interface{}) bool {
+	astr := fmt.Sprintf("%v", a)
+	bstr := fmt.Sprintf("%v", b)
+	return astr == bstr
 }
 
-func equalsBool(a, b []bool) bool {
-	lena, lenb := len(a), len(b)
-	if lena != lenb {
-		return false
+func assertSlice(t *testing.T, want, got interface{}) {
+	if !equalsSlice(want, got) {
+		t.Errorf("want: %v, got: %v", want, got)
 	}
-	for i := range a {
-		if a[i] != b[i] {
-			return false
-		}
-	}
-	return true
 }
 
 func TestGetPrimes(t *testing.T) {
 	firstTenPrimes := []int{2, 3, 5, 7, 11, 13, 17, 19, 23, 29}
 	result := GetPrimes(30)
 
-	if !equalsInt(firstTenPrimes, result) {
-		t.Errorf("First 10 prime numbers are %v and not %v", firstTenPrimes, result)
-	}
-
+	assertSlice(t, firstTenPrimes, result)
 }
 
 func ExampleGetPrimes() {
@@ -55,9 +38,7 @@ func BenchmarkGetPrimes(b *testing.B) {
 func TestSieve(t *testing.T) {
 	sieveOf10 := []bool{false, false, true, true, false, true, false, true, false, false, false}
 	result := Sieve(10)
-	if !equalsBool(sieveOf10, result) {
-		t.Errorf("Sieve of 10 is %v and not %v", sieveOf10, result)
-	}
+	assertSlice(t, sieveOf10, result)
 }
 
 func ExampleSieve() {
@@ -87,9 +68,8 @@ func TestFactorize(t *testing.T) {
 	primes := GetPrimes(100)
 
 	for _, test := range tests {
-		if factors := Factorize(test.n, primes); !equalsInt(factors, test.factors) {
-			t.Errorf("%d factorized is %v and not %v\n", test.n, test.factors, factors)
-		}
+		got := Factorize(test.n, primes)
+		assertSlice(t, test.factors, got)
 	}
 }
 
@@ -112,9 +92,7 @@ func BenchmarkFactorize(b *testing.B) {
 func TestTotient(t *testing.T) {
 	totientOf10 := []int{0, 1, 1, 2, 2, 4, 2, 6, 4, 6, 4}
 	result := Totient(10)
-	if !equalsInt(totientOf10, result) {
-		t.Errorf("Totient of 10 should be %v instead of %v\n", totientOf10, result)
-	}
+	assertSlice(t, totientOf10, result)
 }
 
 func ExampleTotient() {
