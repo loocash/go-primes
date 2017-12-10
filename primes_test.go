@@ -73,7 +73,6 @@ func BenchmarkSieve(b *testing.B) {
 	}
 }
 
-
 func TestFactorize(t *testing.T) {
 	var tests = []struct {
 		n       int

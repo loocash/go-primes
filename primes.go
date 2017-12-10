@@ -16,21 +16,25 @@ func GetPrimes(n int) []int {
 // Sieve returns a slice of booleans telling about which number is prime
 func Sieve(n int) []bool {
 
-	var p []bool
+	isPrime := make([]bool, n+1)
 
-	p = make([]bool, n+1)
-
+	// initially all numbers from 2 to n are assumed to be prime
 	for i := 2; i <= n; i++ {
-		p[i] = true
+		isPrime[i] = true
 	}
 
-	for i := 2; i*i < n; i++ {
-		for j := i * i; j <= n; j += i {
-			p[j] = false
+	// for every prime number p
+	for p := 2; p*p < n; p++ {
+		if !isPrime[p] {
+			continue
+		}
+		// remove all numbers j = p^2 + k*p, where k >= 0
+		for j := p * p; j <= n; j += p {
+			isPrime[j] = false
 		}
 	}
 
-	return p
+	return isPrime
 }
 
 // Factorize returns an array of prime factors of number n
