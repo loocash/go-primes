@@ -15,23 +15,23 @@ func assertSlice(t *testing.T, want, got interface{}) {
 	}
 }
 
-func TestGetPrimes(t *testing.T) {
+func TestUpTo(t *testing.T) {
 	firstTenPrimes := []int{2, 3, 5, 7, 11, 13, 17, 19, 23, 29}
-	result := GetPrimes(30)
+	result := UpTo(30)
 
 	assertSlice(t, firstTenPrimes, result)
 }
 
-func ExampleGetPrimes() {
-	primesUpTo19 := GetPrimes(19)
+func ExampleUpTo() {
+	primesUpTo19 := UpTo(19)
 	fmt.Println(primesUpTo19)
 	// Output:
 	// [2 3 5 7 11 13 17 19]
 }
 
-func BenchmarkGetPrimes(b *testing.B) {
+func BenchmarkUpTo(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		GetPrimes(1000)
+		UpTo(1000)
 	}
 }
 
@@ -65,7 +65,7 @@ func TestFactorize(t *testing.T) {
 		{24, []int{2, 2, 2, 3}},
 	}
 
-	primes := GetPrimes(100)
+	primes := UpTo(100)
 
 	for _, test := range tests {
 		got := Factorize(test.n, primes)
@@ -75,7 +75,7 @@ func TestFactorize(t *testing.T) {
 
 func ExampleFactorize() {
 	num := 24
-	factors := Factorize(num, GetPrimes(num))
+	factors := Factorize(num, UpTo(num))
 	fmt.Println(factors)
 	// Output:
 	// [2 2 2 3]
@@ -83,7 +83,7 @@ func ExampleFactorize() {
 
 func BenchmarkFactorize(b *testing.B) {
 	num := 1000
-	primes := GetPrimes(num)
+	primes := UpTo(num)
 	for i := 0; i < b.N; i++ {
 		Factorize(num, primes)
 	}

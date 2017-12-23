@@ -1,8 +1,8 @@
 // Package primes generates prime numbers
 package primes
 
-// GetPrimes returns a slice of all primes less than or equal to n in ascending order
-func GetPrimes(n int) []int {
+// UpTo returns a slice of all primes less than or equal to n in ascending order
+func UpTo(n int) []int {
 	var p []int
 	sieve := Sieve(n)
 	for i, isPrime := range sieve {
@@ -55,7 +55,7 @@ func Factorize(n int, primes []int) []int {
 // Totient function counts the positive integers up to a given integer n that are relatively prime to n
 func Totient(n int) []int {
 	var t []int
-	primes := GetPrimes(n)
+	primes := UpTo(n)
 
 	t = make([]int, n+1)
 	for i := 1; i <= n; i++ {
