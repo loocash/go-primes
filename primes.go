@@ -94,7 +94,7 @@ func Totient(n int) []int {
 	return t
 }
 
-// Divisors returns every divosor of n as an array in ascending order
+// Divisors returns every divisor of n as an array in ascending order
 func Divisors(n int, primes []int) []int {
 	factors := Factorize(n, primes)
 	flen := len(factors)

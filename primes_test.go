@@ -94,6 +94,7 @@ func BenchmarkTotient(b *testing.B) {
 		Totient(1000)
 	}
 }
+
 func TestDivisors(t *testing.T) {
 	var tests = []struct {
 		n        int
@@ -110,5 +111,18 @@ func TestDivisors(t *testing.T) {
 	for _, test := range tests {
 		got := Divisors(test.n, primes)
 		assertSlice(t, test.divisors, got)
+	}
+}
+
+func ExampleDivisors() {
+	fmt.Println(Divisors(30, UpTo(30)))
+	// Output:
+	// [1 2 3 5 6 10 15 30]
+}
+
+func BenchmarkDivisors(b *testing.B) {
+	primes := UpTo(b.N)
+	for i := 1; i <= b.N; i++ {
+		Divisors(i, primes)
 	}
 }
