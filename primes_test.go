@@ -3,18 +3,6 @@ package primes
 import "testing"
 import "fmt"
 
-func equalsSlice(a, b interface{}) bool {
-	astr := fmt.Sprintf("%v", a)
-	bstr := fmt.Sprintf("%v", b)
-	return astr == bstr
-}
-
-func assertSlice(t *testing.T, want, got interface{}) {
-	if !equalsSlice(want, got) {
-		t.Errorf("want: %v, got: %v", want, got)
-	}
-}
-
 func TestUpTo(t *testing.T) {
 	firstTenPrimes := []int{2, 3, 5, 7, 11, 13, 17, 19, 23, 29}
 	result := UpTo(30)
@@ -104,5 +92,23 @@ func ExampleTotient() {
 func BenchmarkTotient(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Totient(1000)
+	}
+}
+func TestDivisors(t *testing.T) {
+	var tests = []struct {
+		n        int
+		divisors []int
+	}{
+		{30, []int{1, 2, 3, 5, 6, 10, 15, 30}},
+		{1, []int{1}},
+		{8, []int{1, 2, 4, 8}},
+		{83, []int{1, 83}},
+	}
+
+	primes := UpTo(100)
+
+	for _, test := range tests {
+		got := Divisors(test.n, primes)
+		assertSlice(t, test.divisors, got)
 	}
 }

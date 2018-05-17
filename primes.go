@@ -1,6 +1,10 @@
 // Package primes generates prime numbers
 package primes
 
+import (
+	"sort"
+)
+
 // UpTo returns a slice of all primes less than or equal to n in ascending order
 func UpTo(n int) []int {
 	var p []int
@@ -88,4 +92,25 @@ func Totient(n int) []int {
 	*/
 
 	return t
+}
+
+// Divisors returns every divosor of n as an array in ascending order
+func Divisors(n int, primes []int) []int {
+	factors := Factorize(n, primes)
+	flen := len(factors)
+	power := 1 << uint(flen)
+	divs := make([]int, 0, power)
+	for i := 0; i < power; i++ {
+		n := 1
+		for fi, f := range factors {
+			if i&(1<<uint(fi)) > 0 {
+				n *= f
+			}
+		}
+		divs = append(divs, n)
+	}
+
+	sort.Ints(divs)
+
+	return uniq(divs)
 }
